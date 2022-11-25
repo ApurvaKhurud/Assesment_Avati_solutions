@@ -6,7 +6,7 @@ const Todo = lazy(() => import("./components/Todo/Todo"));
 function App() {
  
   return (
-    <div style={{"background": "rgb(216, 217, 207)"}}>
+    <div style={{"background": "rgb(216, 217, 207)", "minHeight":"1000px"}}>
 
       <Router>
       <Suspense
