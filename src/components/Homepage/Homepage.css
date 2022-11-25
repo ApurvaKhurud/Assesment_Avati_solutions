@@ -1,0 +1,16 @@
+.paddingcss{
+    padding-top: 20px;
+}
+
+.paddingcss1{
+    padding-top: 40px;
+}
+
+.tablecss{
+    max-height: 250px;
+}
+
+.tablehead{
+    background-color: rgb(73, 113, 116);
+    color: white;
+}

@@ -1,0 +1,10 @@
+
+#footer {
+    position: relative;
+    bottom: 0px;
+    height: 60px;
+ }
+
+ .footer-text{
+    padding-top: 10px;
+}
