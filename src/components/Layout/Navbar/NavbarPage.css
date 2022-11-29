@@ -5,3 +5,9 @@
 .navbarcss{
     background-color: rgb(214, 228, 229);
 }
+
+.homelink{
+    text-decoration: none;
+    color: black;
+    font-size: larger;
+}

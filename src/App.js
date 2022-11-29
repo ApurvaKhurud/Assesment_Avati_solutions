@@ -1,13 +1,24 @@
+import react,{useEffect} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { lazy, Suspense } from "react";
+import FooterPage from './components/Layout/Footer/FooterPage';
 const Homepage = lazy(() => import("./components/Homepage/Homepage"));
 const Todo = lazy(() => import("./components/Todo/Todo"));
 
+
 function App() {
+
+  useEffect(() => {
+    
+  console.log("app page is mounted")
+    
+  }, [])
+  
  
   return (
-    <div style={{"background": "rgb(216, 217, 207)", "minHeight":"1000px"}}>
-
+    <>  
+    <div style={{"background": "rgb(216, 217, 207)"}}>
+    
       <Router>
       <Suspense
             fallback={
@@ -17,11 +28,11 @@ function App() {
                 alt="..."
               ></img>
             }
-          >
+          > 
         <Routes>
         <Route exact path='/' element={<Homepage />} />
         <Route path='/todo' element={<Todo />}/>
-        <Route
+       <Route
                 path="*"
                 element={
                   <img
@@ -31,11 +42,14 @@ function App() {
                     alt="not found"
                   />
                 }
-              />
+              /> 
         </Routes>
-        </Suspense>
+       </Suspense> 
       </Router>
+    
     </div>
+    <FooterPage />
+    </>
   );
 }
 

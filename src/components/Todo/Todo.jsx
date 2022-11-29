@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import {useNavigate} from 'react-router-dom';
 import './Todo.css';
 import NavbarPage from '../Layout/Navbar/NavbarPage';
-import FooterPage from '../Layout/Footer/FooterPage';
 
 const Todo = () => {
 
@@ -35,7 +34,7 @@ const Todo = () => {
   
   return (
     <>
-      <NavbarPage />
+     <NavbarPage />
       <Container className='paddingcss'>
       <div className='buttoncss'>
       <Button onClick={()=>navigate('/')}>Back</Button>
@@ -69,7 +68,6 @@ const Todo = () => {
     </Table>   
         </Row>
       </Container>
-      <FooterPage />
 
     </>
   )

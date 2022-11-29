@@ -5,12 +5,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
 import NavbarPage from "../Layout/Navbar/NavbarPage";
-import FooterPage from "../Layout/Footer/FooterPage";
 
 const Homepage = () => {
   const [userdata, setUserdata] = useState([]);
   const [pagenumber, setPagenumber] = useState(0);
-  const [search, setSearch] = useState("");
+  const [searchedData, setSearchedData] = useState([]);
   const navigate = useNavigate();
 
   const usersPerPage = 4;
@@ -18,10 +17,18 @@ const Homepage = () => {
   const pageCount = Math.ceil(userdata.length / usersPerPage);
 
   useEffect(() => {
+
+    console.log("Home page is mounted");
+
     axios
       .get("https://jsonplaceholder.typicode.com/users")
-      .then((res) => setUserdata(res.data));
-  }, []);
+      .then((res) =>{
+        setUserdata(res.data)
+        setSearchedData(res.data)
+      } 
+     
+      );
+  },[]);
 
   const handlePageClicked = ({ selected }) => {
     setPagenumber(selected);
@@ -31,32 +38,43 @@ const Homepage = () => {
     navigate("/todo", { state: user });
   };
 
+  const searchUser = (event) => {
+    const search = event.target.value;
+   // console.log(event.target.value)
+    if (search !== "") {
+      var newUserList = userdata.filter((val) => {
+        if (val.name.toLowerCase().includes(search.toLowerCase())) {
+          return val;
+        }
+      });
+      //console.log(newUserList)
+      setSearchedData(newUserList);
+    } else {
+      setSearchedData(userdata)
+    }
+  };
   return (
     <>
-      <NavbarPage />
+     <NavbarPage />
       <Container className="paddingcss">
         <Row>
-        <div>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="form-control "
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            
-          /> 
-          
-          </div> 
+          <div>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="form-control "
+              onChange={searchUser}
+            />
+          </div>
         </Row>
         <Row className="paddingcss1 ">
           <Table
             className="shadow p-3 mb-5 bg-body rounded tablecss text-center"
-             /* striped */ 
-             bordered  
-             hover
-             borderless
-             responsive
+            /* striped */
+            bordered
+            hover
+            borderless
+            responsive
           >
             <thead className="tablehead">
               <tr>
@@ -69,17 +87,7 @@ const Homepage = () => {
               </tr>
             </thead>
             <tbody>
-              {userdata &&
-                userdata
-                  .filter((user) => {
-                    if (search === "") {
-                      return user;
-                    } else if (
-                      user.name.toLowerCase().includes(search.toLowerCase())
-                    ) {
-                      return user;
-                    }
-                  })
+              {searchedData.length>0?searchedData
                   .slice(pageVisited, pageVisited + usersPerPage)
                   .map((user) => (
                     <tr key={user.id}>
@@ -93,11 +101,15 @@ const Homepage = () => {
                       <td>{user.website}</td>
                       <td>{user.company.name}</td>
                     </tr>
-                  ))}
+                  )):
+                  <tr>
+                    <td colSpan={6}>No Data Found</td>
+                  </tr>
+                  }
             </tbody>
           </Table>
         </Row>
-       
+
         <ReactPaginate
           previousLabel={"<<"}
           nextLabel={">>"}
@@ -113,7 +125,6 @@ const Homepage = () => {
           activeClassName={"active"}
         />
       </Container>
-      <FooterPage />
     </>
   );
 };
